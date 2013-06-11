@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <title>COMP 3010 A2Q1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+  <link href="../main.css" rel="stylesheet" media="screen">
+ </head>
+ <body>
+  <div class='container-fluid'>
+   <div class='row-fluid'>
+    <div class='span8 offset2 alert alert-info'>
+     <button type="button" class="close" data-dismiss="alert">&times;</button>
+     {0}
+    </div>
+   </div>
+   <div class='row-fluid'>
+     {1}
+   </div>
+  </div>
+ </body>
+ <footer>
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
+  <script type="application/javascript">
+    msgs = $('.alert');
+    if(msgs.html().trim().length == 0)
+     msgs.hide() 
+  </script>
+ </footer>
+</html>
+
