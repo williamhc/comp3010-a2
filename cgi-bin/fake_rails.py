@@ -41,7 +41,7 @@ class Router(object):
     def __get_query_params__():
         if 'QUERY_STRING' in environ:
             param_str = environ['QUERY_STRING'] 
-        else
+        else:
             param_str = sys.stdin.read()
         data = {}
         for pair in param_str.split('&'):

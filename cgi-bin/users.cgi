@@ -6,7 +6,7 @@ from fake_rails import Response, Router, Model, ModelEncoder, Controller, db
 
 class User(Model):
 
-    "a user model"
+    """a user model"""
     def __init__(self, username, selected):
         self.username = username
         self.selected = selected
@@ -35,8 +35,6 @@ class UserRouter(Router):
     cont_class = UserController
 
 if __name__ == '__main__':
-    from os import environ
-    environ['REQUEST_METHOD'] = 'GET'
     UserRouter().route()
     db.commit()
     db.close()

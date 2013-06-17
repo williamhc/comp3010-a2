@@ -1,11 +1,14 @@
 function replace_user_list (users) {
   select = document.getElementById('user-list')
   select.innerHTML = ""
-  for (var i = users.length - 1; i >= 0; i--) {
+  selected = users[0]
+  for (var i = 0; i < users.length; i++) {
     user = users[i]
     select.innerHTML += "<option" + (user.selected ? " selected=true": "") +
      ">" + user.username + "</option>"
-    if (user.selected) {selected = user};
+    if (user.selected) {
+      selected = user
+    }
   }
   //return the selected user
   return selected
@@ -43,12 +46,11 @@ function handle_task_response(){
 function get_tasks(user) {
   task_request = new XMLHttpRequest()
   task_request.onload = handle_task_response
-  task_request.open('GET', 'tasks.cgi' + (user ? '?user=' + user.name : ''))
+  task_request.open('GET', 'tasks.cgi' + (user ? '?user=' + user.username : ''))
   task_request.send()
 }
 
 window.onload = function(){
   console.log("loaded!")
   get_users()
-  get_tasks()
 }
