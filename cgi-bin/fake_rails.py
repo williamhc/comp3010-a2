@@ -39,9 +39,12 @@ class Router(object):
 
     @staticmethod
     def __get_query_params__():
-        message_body = sys.stdin.read()
+        if 'QUERY_STRING' in environ:
+            param_str = environ['QUERY_STRING'] 
+        else
+            param_str = sys.stdin.read()
         data = {}
-        for pair in message_body.split('&'):
+        for pair in param_str.split('&'):
             if pair and len(pair.split('=')) is 2:
                 k, v = pair.split('=')
                 data[k.strip()] = v.strip()
