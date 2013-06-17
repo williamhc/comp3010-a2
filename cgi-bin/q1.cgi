@@ -73,9 +73,9 @@ def signup_user(form):
 
 
 # globals aren't great but... meh
-TEMPLATE = open("../template.html").read()
+TEMPLATE = open("../q1/template.html").read()
 headers = "Content-type: text/html\n"
-messages = "" 
+messages = ""
 html = ""
 
 
