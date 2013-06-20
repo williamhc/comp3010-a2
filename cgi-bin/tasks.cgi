@@ -7,11 +7,12 @@ from fake_rails import Response, Router, Model, ModelEncoder, Controller, db
 class Task(Model):
 
     """a task with a user and a priority"""
-    def __init__(self, user=None, priority=None, title=None, description=None):
+    def __init__(self, id=None, user=None, priority=None, title=None, description=None):
         self.user = user
         self.priority = priority
         self.title = title
         self.description = description
+	self.id = id
 
     @staticmethod
     def keys():
@@ -28,11 +29,9 @@ class Task(Model):
         return self
 
     def delete(self):
-        kvs = zip(self.keys(), self.values())
-        filters = ["{0}=?".format(key, val) for key, val in kvs if val]
-        query = "DELETE FROM tasks WHERE {0}".format(", ".join(filters))
+        query = "DELETE FROM tasks WHERE id=?"
         cursor = db.cursor()
-        cursor.execute(query, [val for val in self.values() if val])
+        cursor.execute(query, self.id)
 
 
 class TasksController(Controller):
@@ -67,7 +66,7 @@ class TasksController(Controller):
     def create(self):
         new_task = Task(**self.query_params).save()
         body = json.dumps(new_task, cls=ModelEncoder)
-        return Response(type="application/json", body=body)
+        return Response(type="text/html", body='<meta http-equiv="refresh" content="0; url=q2.cgi">')
 
     def delete(self):
         Task(**self.query_params).delete()
@@ -80,6 +79,10 @@ class TasksRouter(Router):
     cont_class = TasksController
 
 if __name__ == '__main__':
-    TasksRouter().route()
-    db.commit()
-    db.close()
+    try:
+      TasksRouter().route()
+      db.commit()
+      db.close()
+    except Exception, e:
+      print "Content-type: text/html\n"
+      print e.message

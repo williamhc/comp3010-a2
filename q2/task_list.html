@@ -15,11 +15,11 @@
           <select id="user-list" style="margin-bottom: 0">
           </select>
           or
-          <button class="btn btn-primary">Add a New Task</button>
+          <button class="btn btn-primary" id="new-task-button">Add a New Task</button>
         </div>
       </div>
       <div class='row-fluid'>
-        <div id='new-task-form span6 offset3'>
+        <div id='new-task-form' class='span6 offset3'>
           <!-- dynamically insert template here -->
         </div>
       </div>
@@ -55,7 +55,9 @@
           <input type="text" name="title">
           <label>Description</label>
           <textarea name="description"></textarea>
-          <button class="btn btn-primary" type="submit">Finish</button>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Finish</button>
+          </div>
         </fieldset>
       </form>
     </script>

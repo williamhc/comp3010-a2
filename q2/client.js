@@ -34,8 +34,31 @@ function replace_task_list (tasks) {
   for (var i = tasks.length - 1; i >= 0; i--) {
     task = tasks[i]
     tbody.innerHTML += "<tr><td>" + task.user + "</td><td>" + task.priority +
-      "</td><td>" + task.title + "</td><td>" + task.description + "</td></tr>"
+      "</td><td>" + task.title + "</td><td>" + task.description + 
+      "</td><td>" + make_delete_button(task) + "<td></tr>"
   }
+  delete_btns = document.getElementsByClassName('delete-task-btn')
+  for (var i = 0; i < delete_btns.length; i++) {
+    btn = delete_btns[i]
+    btn.onclick = delete_task
+  }
+}
+
+function make_delete_button(task){
+  return "<button class='btn delete-task-btn'" +
+    "data-task-id='" + task.id + "'><i class='icon-trash'></i></button>"
+}
+
+function delete_task(e){
+  id = e.currentTarget.getAttribute('data-task-id')
+  delete_request = new XMLHttpRequest()
+  delete_request.onload = get_users
+  delete_request.open('DELETE', 'tasks.cgi?id=' + id)
+  delete_request.send()
+}
+
+function on_user_changed(e){
+  get_tasks({'username': e.target.selectedOptions[0].value})
 }
 
 function handle_task_response(){
@@ -50,7 +73,22 @@ function get_tasks(user) {
   task_request.send()
 }
 
-window.onload = function(){
-  console.log("loaded!")
-  get_users()
+function toggle_form(){
+  form_area = document.getElementById('new-task-form')
+  if(form_area.childElementCount == 0){
+    contents = document.getElementById('form-template').innerHTML
+  }else{
+    contents = ""
+  }
+  form_area.innerHTML = contents
 }
+
+window.onload = function(){
+  get_users()
+  new_but = document.getElementById('new-task-button')
+  new_but.onclick = toggle_form
+  select = document.getElementById('user-list')
+  select.onchange = on_user_changed
+  
+}
+

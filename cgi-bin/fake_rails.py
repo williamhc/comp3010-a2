@@ -1,6 +1,7 @@
 import sys
 import json
 import sqlite3
+import re
 from json import JSONEncoder
 from os import environ
 
@@ -39,16 +40,22 @@ class Router(object):
 
     @staticmethod
     def __get_query_params__():
+        param_str = None
         if 'QUERY_STRING' in environ:
             param_str = environ['QUERY_STRING'] 
-        else:
+        if not param_str:
             param_str = sys.stdin.read()
         data = {}
         for pair in param_str.split('&'):
             if pair and len(pair.split('=')) is 2:
                 k, v = pair.split('=')
-                data[k.strip()] = v.strip()
+                data[k.strip()] = Router.__url_decode__(v)
         return data
+
+   @staticmethod 
+   def __url_decode__(url):
+        return re.compile('%([0-9a-fA-F]{2})',re.M).sub(lambda m: chr(int(m.group(1),16)), url)
+
 
 
 class Response(object):
